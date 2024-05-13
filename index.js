@@ -1,25 +1,15 @@
-function trap(height) {
-  let totalWater = 0;
-  let left = 0;
-  let right = height.length - 1;
-  let maxLeft = 0;
-  let maxRight = 0;
-  while (left < right) {
-    if (height[left] < height[right]) {
-      if (height[left] >= maxLeft) {
-        maxLeft = height[left];
-      } else {
-        totalWater += maxLeft - height[left];
-      }
-      left++;
+function merge(intervals) {
+  intervals.sort((a, b) => a[0] - b[0]);
+  const merged = [];
+  for (const interval of intervals) {
+    if (!merged.length || merged[merged.length - 1][1] < interval[0]) {
+      merged.push(interval);
     } else {
-      if (height[right] >= maxRight) {
-        maxRight = height[right];
-      } else {
-        totalWater += maxRight - height[right];
-      }
-      right--;
+      merged[merged.length - 1][1] = Math.max(
+        merged[merged.length - 1][1],
+        interval[1],
+      );
     }
   }
-  return totalWater;
+  return merged;
 }
